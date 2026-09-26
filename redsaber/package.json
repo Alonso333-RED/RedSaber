@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -13,14 +13,17 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "bugs": {
     "url": "https://github.com/Alonso333-RED/RedSaber/issues"
   },
   "homepage": "https://github.com/Alonso333-RED/RedSaber#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
-    "knex": "^3.3.0",
-    "mysql": "^2.18.1"
+    "mariadb": "^3.5.4"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.2"
   }
 }
