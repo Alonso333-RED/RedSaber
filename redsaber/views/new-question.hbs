@@ -1,0 +1,36 @@
+<a href="/" class="btn btn-outline-secondary btn-sm mb-3">← Volver</a>
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="mb-4">Haz tu pregunta</h2>
+
+    {{#if error}}
+      <div class="alert alert-danger">{{error}}</div>
+    {{/if}}
+
+    <form action="/preguntar" method="POST">
+      <div class="mb-3">
+        <label class="form-label">Publicar como</label>
+        <select name="author_id" class="form-select" required>
+          {{#each users}}
+            <option value="{{this.id_user}}">{{this.username}}</option>
+          {{/each}}
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Título</label>
+        <input type="text" name="title" class="form-control" maxlength="200"
+               placeholder="Resume tu duda en una frase" value="{{title}}" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Detalle</label>
+        <textarea name="content" class="form-control" rows="5"
+                  placeholder="Explica tu duda con detalle" required>{{content}}</textarea>
+      </div>
+
+      <button type="submit" class="btn btn-rojo">Publicar</button>
+    </form>
+  </div>
+</div>

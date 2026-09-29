@@ -36,7 +36,18 @@ async function getQuestionById(id_question) {
     return rows[0];
 }
 
+async function createQuestion(title, content, author_id) {
+    const result = await pool.query(
+        `INSERT INTO questions (title, content, author_id) VALUES (?, ?, ?)`,
+        [title, content, author_id]
+    );
+
+    return Number(result.insertId);
+}
+
+
 export default {
     getAllQuestions,
-    getQuestionById
+    getQuestionById,
+    createQuestion
 };

@@ -45,4 +45,31 @@ router.get("/pregunta/:id", async (req, res) => {
     res.render("question", { question, author, answers });
 });
 
+router.get("/preguntar", async (req, res) => {
+    const users = await userService.getAllUsers();
+    res.render("new-question", { users });
+});
+
+router.post("/preguntar", async (req, res) => {
+    const { title, content, author_id } = req.body;
+
+    if (!title?.trim() || !content?.trim() || !author_id) {
+        const users = await userService.getAllUsers();
+        return res.status(400).render("new-question", {
+            users,
+            title,
+            content,
+            error: "Completa todos los campos"
+        });
+    }
+
+    const id = await questionService.createQuestion(
+        title.trim(),
+        content.trim(),
+        author_id
+    );
+
+    res.redirect(`/pregunta/${id}`);
+});
+
 export default router;
