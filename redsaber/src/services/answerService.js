@@ -4,7 +4,7 @@ async function getAllAnswers() {
     const rows = await pool.query(`
         SELECT
             id_answer,
-            question_id
+            question_id,
             author_id,
             content,
             updated_at
@@ -20,7 +20,7 @@ async function getAnswerById(id_answer) {
         `
         SELECT
             id_answer,
-            question_id
+            question_id,
             author_id,
             content,
             updated_at

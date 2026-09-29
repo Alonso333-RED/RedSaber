@@ -21,6 +21,7 @@
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "express": "^5.2.1",
+    "express-handlebars": "^9.0.1",
     "mariadb": "^3.5.4"
   },
   "devDependencies": {

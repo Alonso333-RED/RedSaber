@@ -1,0 +1,25 @@
+<section class="text-center py-4">
+  <h1 class="fw-bold">Aprende y comparte con otros estudiantes</h1>
+  <p class="text-secondary">Haz tu pregunta o ayuda a otros respondiendo.</p>
+</section>
+
+{{#if questions.length}}
+  <div class="d-flex flex-column gap-3">
+    {{#each questions}}
+      <a href="/pregunta/{{this.id_question}}" class="text-decoration-none text-reset">
+        <div class="card tarjeta-pregunta">
+          <div class="card-body">
+            <p class="text-secondary small mb-2">
+              👤 {{this.author}} · {{this.date}}
+            </p>
+            <h5 class="card-title">{{this.title}}</h5>
+            <p class="card-text text-secondary">{{this.content}}</p>
+            <span class="badge text-bg-light border">💬 {{this.answersCount}} respuestas</span>
+          </div>
+        </div>
+      </a>
+    {{/each}}
+  </div>
+{{else}}
+  <p class="text-center text-secondary py-5">Todavía no hay preguntas.</p>
+{{/if}}

@@ -1,0 +1,26 @@
+<a href="/" class="btn btn-outline-secondary btn-sm mb-3">← Volver</a>
+
+<div class="card">
+  <div class="card-body">
+    <p class="text-secondary small mb-2">👤 {{author.username}}</p>
+    <h2 class="card-title">{{question.title}}</h2>
+    <p class="card-text mt-3">{{question.content}}</p>
+  </div>
+</div>
+
+<h4 class="mt-4 mb-3">Respuestas ({{answers.length}})</h4>
+
+{{#if answers.length}}
+  <div class="d-flex flex-column gap-3">
+    {{#each answers}}
+      <div class="card">
+        <div class="card-body">
+          <p class="text-secondary small mb-2">👤 {{this.author}}</p>
+          <p class="card-text mb-0">{{this.content}}</p>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+{{else}}
+  <p class="text-secondary">Aún nadie ha respondido esta pregunta.</p>
+{{/if}}
