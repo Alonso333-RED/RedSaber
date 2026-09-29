@@ -49,7 +49,33 @@ router.get("/pregunta/:id", async (req, res) => {
             author: users.find(u => u.id_user === a.author_id)?.username
         }));
 
-    res.render("question", { question, author, answers });
+    res.render("question", {
+        question,
+        author,
+        answers,
+        user: req.session?.user
+    });
+});
+
+router.post("/pregunta/:id/responder", requireLogin, async (req, res) => {
+    const { id } = req.params;
+    const { content } = req.body;
+
+    const question = await questionService.getQuestionById(id);
+
+    if (!question) {
+        return res.status(404).send("Pregunta no encontrada");
+    }
+
+    if (content?.trim()) {
+        await answerService.createAnswer(
+            question.id_question,
+            req.session.user.id,
+            content.trim()
+        );
+    }
+
+    res.redirect(`/pregunta/${id}`);
 });
 
 router.get("/preguntar", requireLogin, (req, res) => {
@@ -108,5 +134,7 @@ router.post("/registro", async (req, res) => {
         });
     }
 });
+
+
 
 export default router;

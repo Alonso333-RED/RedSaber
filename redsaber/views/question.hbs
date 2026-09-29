@@ -11,7 +11,7 @@
 <h4 class="mt-4 mb-3">Respuestas ({{answers.length}})</h4>
 
 {{#if answers.length}}
-  <div class="d-flex flex-column gap-3">
+  <div class="d-flex flex-column gap-3 mb-4">
     {{#each answers}}
       <div class="card">
         <div class="card-body">
@@ -23,4 +23,25 @@
   </div>
 {{else}}
   <p class="text-secondary">Aún nadie ha respondido esta pregunta.</p>
+{{/if}}
+
+{{#if user}}
+  <div class="card">
+    <div class="card-body">
+      <h5 class="mb-1">Tu respuesta</h5>
+      <p class="text-secondary small mb-3">Respondiendo como 👤 <strong>{{user.username}}</strong></p>
+
+      <form action="/pregunta/{{question.id_question}}/responder" method="POST">
+        <div class="mb-3">
+          <textarea name="content" class="form-control" rows="4"
+                    placeholder="Explica paso a paso..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-rojo">Responder</button>
+      </form>
+    </div>
+  </div>
+{{else}}
+  <div class="alert alert-warning text-center mb-0">
+    Para responder necesitas <a href="/login">iniciar sesión</a>.
+  </div>
 {{/if}}

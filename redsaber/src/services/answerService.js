@@ -34,7 +34,17 @@ async function getAnswerById(id_answer) {
     return rows[0];
 }
 
+async function createAnswer(question_id, author_id, content) {
+    const result = await pool.query(
+        `INSERT INTO answers (question_id, author_id, content) VALUES (?, ?, ?)`,
+        [question_id, author_id, content]
+    );
+
+    return Number(result.insertId);
+}
+
 export default {
     getAllAnswers,
-    getAnswerById
+    getAnswerById,
+    createAnswer
 };
