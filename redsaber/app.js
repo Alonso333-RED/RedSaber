@@ -7,6 +7,7 @@ import viewRouter from "./src/routes/viewRouter.js";
 import userRouter from "./src/routes/userRouter.js";
 import questionRouter from "./src/routes/questionRouter.js";
 import answerRouter from "./src/routes/answerRouter.js";
+import authRouter from "./src/routes/authRouter.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -35,6 +36,7 @@ app.use(viewRouter);
 app.use(userRouter);
 app.use(questionRouter);
 app.use(answerRouter);
+app.use(authRouter)
 
 app.listen(PORT, () => {
     console.log(`Example app listening on port http://localhost:${PORT}`);
