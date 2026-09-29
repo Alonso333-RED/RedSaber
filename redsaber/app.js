@@ -29,9 +29,10 @@ app.use(session({
 }));
 
 app.use((req, res, next) => {
-    res.locals.currentUser = req.session.user;
+    res.locals.currentUser = req.session?.user;
     next();
 });
+
 app.use(viewRouter);
 app.use(userRouter);
 app.use(questionRouter);

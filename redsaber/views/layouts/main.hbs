@@ -13,10 +13,18 @@
   <div class="container">
     <a class="navbar-brand fw-bold fs-4" href="/">Red<span>Saber</span></a>
 
-    <div class="d-flex gap-2">
-      <a href="/registro" class="btn btn-outline-secondary">Crear cuenta</a>
-      <a href="/login" class="btn btn-outline-secondary">Ingresar</a>
+    <div class="d-flex align-items-center gap-2">
       <a href="/preguntar" class="btn btn-rojo">+ Preguntar</a>
+
+      {{#if currentUser}}
+        <span class="text-secondary small">👤 <strong>{{currentUser.username}}</strong></span>
+        <form action="/logout" method="POST" class="m-0">
+          <button type="submit" class="btn btn-outline-secondary">Salir</button>
+        </form>
+      {{else}}
+        <a href="/login" class="btn btn-outline-secondary">Entrar</a>
+        <a href="/registro" class="btn btn-outline-secondary">Crear cuenta</a>
+      {{/if}}
     </div>
   </div>
 </nav>
