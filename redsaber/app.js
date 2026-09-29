@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import session from "express-session";
 import { fileURLToPath } from "url";
 import { engine } from "express-handlebars";
 import viewRouter from "./src/routes/viewRouter.js";
@@ -20,6 +21,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use(session({
+    secret: "cambia-esto-por-algo-secreto",
+    resave: false,
+    saveUninitialized: false
+}));
+
+app.use((req, res, next) => {
+    res.locals.currentUser = req.session.user;
+    next();
+});
 app.use(viewRouter);
 app.use(userRouter);
 app.use(questionRouter);

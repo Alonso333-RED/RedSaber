@@ -72,4 +72,36 @@ router.post("/preguntar", async (req, res) => {
     res.redirect(`/pregunta/${id}`);
 });
 
+router.get("/registro", (req, res) => {
+    res.render("register", { ok: req.query.ok });
+});
+
+router.post("/registro", async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username?.trim() || !password || password.length < 6) {
+        return res.status(400).render("register", {
+            username,
+            error: "Escribe un usuario y una contraseña de mínimo 6 caracteres"
+        });
+    }
+
+    try {
+        await userService.registerUser(username.trim(), password);
+        res.redirect("/registro?ok=1");
+    } catch (error) {
+        if (error.code === "ER_DUP_ENTRY") {
+            return res.status(409).render("register", {
+                username,
+                error: "Ese usuario ya existe"
+            });
+        }
+        console.error(error);
+        res.status(500).render("register", {
+            username,
+            error: "Error al crear la cuenta"
+        });
+    }
+});
+
 export default router;
