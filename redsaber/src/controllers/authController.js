@@ -1,26 +1,20 @@
 import authService from "../services/authService.js";
 
-async function login(req,res) {
+async function login(req, res) {
     const { username, password } = req.body;
 
-    const user = await authService.login(
-        username,
-        password
-    );
+    const user = await authService.login(username, password);
 
     if (!user) {
         return res.redirect("/login?error=1");
     }
 
-
-    await regenerateSession(req);
     req.session.user = {
         id: user.id_user,
+        username: user.username
     };
-    await saveSession(req);
 
-    res.redirect("/profile");
-    
+    res.redirect("/");
 }
 
 function logout(req, res) {

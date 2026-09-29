@@ -45,7 +45,6 @@ async function createQuestion(title, content, author_id) {
     return Number(result.insertId);
 }
 
-
 export default {
     getAllQuestions,
     getQuestionById,

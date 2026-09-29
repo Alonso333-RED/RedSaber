@@ -5,6 +5,13 @@ import userService from "../services/userService.js";
 
 const router = express.Router();
 
+function requireLogin(req, res, next) {
+    if (!req.session?.user) {
+        return res.redirect("/login");
+    }
+    next();
+}
+
 router.get("/", async (req, res) => {
     const allQuestions = await questionService.getAllQuestions();
     const allAnswers = await answerService.getAllAnswers();
@@ -45,18 +52,16 @@ router.get("/pregunta/:id", async (req, res) => {
     res.render("question", { question, author, answers });
 });
 
-router.get("/preguntar", async (req, res) => {
-    const users = await userService.getAllUsers();
-    res.render("new-question", { users });
+router.get("/preguntar", requireLogin, (req, res) => {
+    res.render("new-question", { user: req.session.user });
 });
 
-router.post("/preguntar", async (req, res) => {
-    const { title, content, author_id } = req.body;
+router.post("/preguntar", requireLogin, async (req, res) => {
+    const { title, content } = req.body;
 
-    if (!title?.trim() || !content?.trim() || !author_id) {
-        const users = await userService.getAllUsers();
+    if (!title?.trim() || !content?.trim()) {
         return res.status(400).render("new-question", {
-            users,
+            user: req.session.user,
             title,
             content,
             error: "Completa todos los campos"
@@ -66,7 +71,7 @@ router.post("/preguntar", async (req, res) => {
     const id = await questionService.createQuestion(
         title.trim(),
         content.trim(),
-        author_id
+        req.session.user.id
     );
 
     res.redirect(`/pregunta/${id}`);

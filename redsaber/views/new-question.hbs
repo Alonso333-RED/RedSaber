@@ -2,22 +2,14 @@
 
 <div class="card">
   <div class="card-body">
-    <h2 class="mb-4">Haz tu pregunta</h2>
+    <h2 class="mb-1">Haz tu pregunta</h2>
+    <p class="text-secondary small mb-4">Publicando como 👤 <strong>{{user.username}}</strong></p>
 
     {{#if error}}
       <div class="alert alert-danger">{{error}}</div>
     {{/if}}
 
     <form action="/preguntar" method="POST">
-      <div class="mb-3">
-        <label class="form-label">Publicar como</label>
-        <select name="author_id" class="form-select" required>
-          {{#each users}}
-            <option value="{{this.id_user}}">{{this.username}}</option>
-          {{/each}}
-        </select>
-      </div>
-
       <div class="mb-3">
         <label class="form-label">Título</label>
         <input type="text" name="title" class="form-control" maxlength="200"

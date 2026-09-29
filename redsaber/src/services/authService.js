@@ -1,31 +1,27 @@
-import pool from "../database/pool.js";
+import pool from "../config/config.js";
 import bcrypt from "bcryptjs";
 
-async function login(username,password){
+async function login(username, password) {
 
-    const result = await pool.query(
-        "SELECT id_user, password_hash FROM users WHERE username = ?",
+    const rows = await pool.query(
+        "SELECT id_user, username, password_hash FROM users WHERE username = ?",
         [username]
     );
 
-    if(result.rows.length === 0){
+    if (rows.length === 0) {
         return null;
     }
 
-    const user = result.rows[0];
+    const user = rows[0];
 
-    const correct = await bcrypt.compare(
-        password,
-        user.password_hash
-    );
+    const correct = await bcrypt.compare(password, user.password_hash);
 
-    if(!correct){
+    if (!correct) {
         return null;
     }
 
-    return user;
+    return { id_user: user.id_user, username: user.username };
 }
-
 
 export default {
     login
